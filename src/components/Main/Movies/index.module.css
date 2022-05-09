@@ -1,0 +1,17 @@
+.wrapper {
+    width: 100%;
+}
+
+.resultsCount {
+    font-weight: 600;
+    font-size: 20px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+}
+
+.moviesList {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "title": "All",
+        "value": ""
+    },
+    {
+        "title": "Documentary",
+        "value": "documentary"
+    },
+    {
+        "title": "Comedy",
+        "value": "comedy"
+    },
+    {
+        "title": "Horror",
+        "value": "horror"
+    },
+    {
+        "title": "Crime",
+        "value": "crime"
+    }
+]

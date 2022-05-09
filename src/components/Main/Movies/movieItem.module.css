@@ -1,0 +1,40 @@
+.wrapper {
+    width: 323px;
+    cursor: pointer;
+    margin-bottom: 50px;
+}
+
+.image:hover {
+    opacity: 0.8;
+}
+
+.titleWrapper {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color_white);
+    opacity: 0.7;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.year {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid  rgba(255, 255, 255, .5);
+    border-radius: 4px;
+    width: 66px;
+    height: 26px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.genre {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--color_white);
+    opacity: 0.5;
+}

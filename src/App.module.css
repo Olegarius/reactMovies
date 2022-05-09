@@ -1,0 +1,24 @@
+.wrapper {
+  background-color: var(--color_white);
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  padding: 54px;
+  background-color: var(--color_grey);
+  position: absolute;
+  min-height: calc(100% - 108px);
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--color_white)
+}
+
+.errorWrapper {
+  background-color: var(--color_grey);
+  color: var(--color_red);
+  font-size: 20px;
+  font-weight: bold;
+}

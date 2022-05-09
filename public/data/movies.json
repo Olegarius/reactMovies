@@ -1,0 +1,68 @@
+[
+    {
+        "id": "1",
+        "title": "Pulp Fiction",
+        "image": "/images/movies/pulp.jpg",
+        "release_date": 2004,
+        "genre": ["crime", "documentary"],
+        "movieURL": "https://",
+        "rating": 7.8,
+        "runtime": 90,
+        "description": ""
+    },
+    {
+        "id": "2",
+        "title": "Bohemain Rhapsody",
+        "image": "/images/movies/bohemain.jpg",
+        "release_date": 2003,
+        "genre": ["comedy"],
+        "movieURL": "https://",
+        "rating": 7.5,
+        "runtime": 90,
+        "description": ""
+    },
+    {
+        "id": "3",
+        "title": "Bill: voll 2",
+        "image": "/images/movies/bill.jpg",
+        "release_date": 1994,
+        "genre": ["crime", "horror"],
+        "movieURL": "https://",
+        "rating": 7.6,
+        "runtime": 90,
+        "description": ""
+    },
+    {
+        "id": "4",
+        "title": "Avengers: war of infitity",
+        "image": "/images/movies/avengers.jpg",
+        "release_date": 2004,
+        "genre": ["horror", "documentary"],
+        "movieURL": "https://",
+        "rating": 8.5,
+        "runtime": 90,
+        "description": ""
+    },
+    {
+        "id": "5",
+        "title": "Inception",
+        "image": "/images/movies/inception.jpg",
+        "release_date": 2005,
+        "genre": ["horror", "comedy"],
+        "movieURL": "https://",
+        "rating": 6.4,
+        "runtime": 90,
+        "description": ""
+    },
+    {
+        "id": "6",
+        "title": "Reservoir dogs",
+        "image": "/images/movies/dogs.jpg",
+        "release_date": 1994,
+        "genre": ["crime"],
+        "movieURL": "https://",
+        "rating": 7.8,
+        "runtime": 90,
+        "description": ""
+    }
+]
