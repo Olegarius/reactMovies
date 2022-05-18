@@ -5,7 +5,11 @@ import Movies from './Movies';
 import styles from './index.module.css';
 import { SORT_LIST } from "./Filters/const";
 
-const Main = () => {
+type Props = {
+  addMovie?: boolean;
+};
+
+const Main:React.FC<Props> = ({addMovie = false}) => {
   const [currentFilter, setCurrentFilter] = useState<string>('');
   const [currentOrder, setCurrentOrder] = useState<string>(SORT_LIST[0].value);
   const onFilterChange = useCallback((newFilter: string) => {setCurrentFilter(newFilter)}, [setCurrentFilter]);
@@ -17,7 +21,7 @@ return (<div className={styles.wrapper}>
       activeFilter={currentFilter}
       onOrderChange={onOrderChange}
       activeOrder={currentOrder}/>
-    <Movies filter={currentFilter} sort={currentOrder}/>
+    <Movies filter={currentFilter} sort={currentOrder} addMovie={addMovie}/>
   </div>);
 }
 
