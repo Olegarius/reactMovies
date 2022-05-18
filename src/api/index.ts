@@ -11,3 +11,8 @@ export const getMovies = async ({filter, sort}: MoviesProps) => {
     const data = await fetch(`/data/movies.json?filter=${filter}&sort=${sort}`);
     return await data.json();
 };
+
+export const deleteMovie = async (id: number | string) => {
+    // TODO: delete
+    return await Promise.resolve({});
+};
