@@ -1,0 +1,99 @@
+.wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--color_black);
+    padding: 37px 60px 29px 60px;
+    margin-bottom: 10px;
+    position: relative;
+ }
+
+ .logo {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 24px;
+    
+    color: var(--color_red);
+ }
+
+ .search {
+     cursor: pointer;
+ }
+
+ .logoSearchWrapper {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 30px;
+ }
+
+.contentWrapper {
+    display: flex;
+    width: 100%;
+}
+
+.descriptionWrapper {
+    margin-left: 59px;
+}
+
+.title {
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 49px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color_white);
+ }
+
+ .rating {
+    width: 60px;
+    height: 60px;
+    margin-left: 25px;
+    color: var(--color_white);
+    font-weight: 300;
+    font-size: 20px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--color_white);
+    border-radius: 50px;
+}
+
+.titleRatingWrapper {
+    display: flex;
+    margin-bottom: 4px;
+}
+
+.genre {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--color_white);
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    margin-bottom: 30px;
+}
+
+.year, .duration {
+    font-weight: 300;
+    font-size: 24px;
+    color: var(--color_red);
+    margin-bottom: 30px;
+}
+
+.duration {
+    margin-left: 51px;
+}
+
+.yearDurationWrapper {
+    display: flex;
+}
+
+.description {
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--color_white);
+    mix-blend-mode: normal;
+    opacity: 0.5;
+}

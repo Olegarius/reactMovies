@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState, useContext} from "react";
 
 import closeImg from './close.svg';
 import Button from '../../elements/Button';
@@ -8,14 +8,15 @@ import DatePicker from "../../elements/DatePicker";
 import Input from "../../elements/Input";
 import Select, {OptionType} from "../../elements/Select";
 import { getFilterItems } from "../../api";
+import { MovieContext } from "../../contextProviders";
 
 type Props = {
-  movie?: IMovie;
   onClose: () => void;
   onConfirm: (data: IMovie | {}) => any;
 };
 
-const AddEditPopup:React.FC<Props> = ({movie, onClose, onConfirm}) => {
+const AddEditPopup:React.FC<Props> = ({onClose, onConfirm}) => {
+  const [{movie}] = useContext(MovieContext);
   const [filterItems, setFilterItems] = useState<OptionType[] | null>(null);
   const [currentGenres, setCurrentGenres] = useState<OptionType[] | null>(null);
 

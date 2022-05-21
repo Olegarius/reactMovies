@@ -1,7 +1,6 @@
 export type Props = {
     filter: string | null;
     sort: string | null;
-    addMovie?: boolean;
 };
 
 export type IMovie = {

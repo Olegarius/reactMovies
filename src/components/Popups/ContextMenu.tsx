@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import styles from './index.module.css';
 
 type Props = {
-  onClick: (actionType: string) => () => void;
+  onClick: (actionType: string) => (event: any) => void;
 };
 
 const ContextMenu:React.FC<Props> = ({onClick: action}) => {

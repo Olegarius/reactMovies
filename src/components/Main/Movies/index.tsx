@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from "react";
+import React, {useEffect, useState, useCallback, useContext} from "react";
 import MovieItem from './MovieItem';
 import EditMoviePopup from 'reactjs-popup';
 import AddEditContext from '../../Popups/AddEditPopup';
@@ -7,6 +7,7 @@ import { getMovies } from "../../../api";
 import {Props, IMovie} from './types';
 import styles from './index.module.css';
 import 'reactjs-popup/dist/index.css';
+import { MovieContext } from "../../../contextProviders";
 
 const popupWrapper = {
   border: 0,
@@ -14,11 +15,11 @@ const popupWrapper = {
   padding: 0
 };
 
-const Movies:React.FC<Props> = ({filter, sort, addMovie = false}) => {
+const Movies:React.FC<Props> = ({filter, sort}) => {
+  const [{addMovieOpened: addMovie}, actions] = useContext(MovieContext);
   const [movies, setMovies] = useState<IMovie[] | null>(null);
   const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false);
   const [contextAction, setContextAction] = useState<string>('');
-  const [currentMovie, setCurrentMovie] = useState<IMovie | undefined>();
 
   const onActionClick = useCallback((action: string, movie?: IMovie)=>{
     switch(action) {
@@ -31,7 +32,7 @@ const Movies:React.FC<Props> = ({filter, sort, addMovie = false}) => {
       default:
         setIsOpenPopup(false);
     };
-    setCurrentMovie(movie);
+    actions.SET_MOVIE(movie);
     setContextAction(action);
   },[setIsOpenPopup, setContextAction]);
   const onClosePopup=useCallback(()=>{setIsOpenPopup(false)},[setIsOpenPopup]);
@@ -46,8 +47,9 @@ const Movies:React.FC<Props> = ({filter, sort, addMovie = false}) => {
   useEffect(() => {
     if(addMovie) {
       onActionClick('edit');
+      actions.SET_ADD_MOVIE(false);
     }
-  }, [addMovie, onActionClick]);
+  }, [addMovie, onActionClick, actions]);
 
   return (<div className={styles.wrapper}>
     <div className={styles.resultsCount}>{`${movies?.length || 0} movies found`}</div>
@@ -55,8 +57,8 @@ const Movies:React.FC<Props> = ({filter, sort, addMovie = false}) => {
       {movies?.map((movie) => <MovieItem key={movie.id} movie={movie} onAction={onActionClick}/>)}
     </div>
     <EditMoviePopup open={isOpenPopup} modal onClose={onClosePopup} contentStyle={popupWrapper}>
-      {contextAction === 'edit' && <AddEditContext movie={currentMovie} onClose={onClosePopup} onConfirm={onSave}/>}
-      {contextAction === 'delete' && <DeleteContext id={currentMovie?.id || 0} onClose={onClosePopup}/>}
+      {contextAction === 'edit' && <AddEditContext onClose={onClosePopup} onConfirm={onSave}/>}
+      {contextAction === 'delete' && <DeleteContext onClose={onClosePopup}/>}
     </EditMoviePopup>
   </div>);
 }
