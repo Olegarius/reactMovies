@@ -1,22 +1,22 @@
 [
     {
-        "title": "All",
+        "label": "All",
         "value": ""
     },
     {
-        "title": "Documentary",
+        "label": "Documentary",
         "value": "documentary"
     },
     {
-        "title": "Comedy",
+        "label": "Comedy",
         "value": "comedy"
     },
     {
-        "title": "Horror",
+        "label": "Horror",
         "value": "horror"
     },
     {
-        "title": "Crime",
+        "label": "Crime",
         "value": "crime"
     }
 ]

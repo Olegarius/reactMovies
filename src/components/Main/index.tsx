@@ -5,7 +5,7 @@ import Movies from './Movies';
 import styles from './index.module.css';
 import { SORT_LIST } from "./Filters/const";
 
-const Main = () => {
+const Main:React.FC = () => {
   const [currentFilter, setCurrentFilter] = useState<string>('');
   const [currentOrder, setCurrentOrder] = useState<string>(SORT_LIST[0].value);
   const onFilterChange = useCallback((newFilter: string) => {setCurrentFilter(newFilter)}, [setCurrentFilter]);
