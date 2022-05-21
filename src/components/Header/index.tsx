@@ -1,21 +1,13 @@
-import React, { useCallback } from "react";
-import styles from './index.module.css';
-import logo from '../../images/logo.png';
+import React, { useContext } from "react";
+import MovieDetails from "./MovieDetails";
+import Search from "./Search";
+import { MovieContext } from "../../contextProviders";
 
-const Header = () => {
-  const onSearch=useCallback(() => {}, []);
+const Header:React.FC = () => {
+  const [{selectedMovie}] = useContext(MovieContext);
+
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.logoWrapper}>
-        <img src={logo}/>
-        <div className={styles.addMovie}>+ add movie</div>
-      </div>
-      <div className={styles.title}>FIND YOUR MOViE</div>
-      <div className={styles.searchWrapper}>
-        <input className={styles.searchInput} placeholder="What do you want to watch?"/>
-        <input className={styles.searchButton} type="button" name="search" value="search" onClick={onSearch}/>
-      </div>
-    </div>
+    <>{selectedMovie ? <MovieDetails /> : <Search />}</>
   );
 }
 

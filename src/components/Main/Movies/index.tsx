@@ -1,20 +1,77 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback, useContext} from "react";
+import 'reactjs-popup/dist/index.css';
+import { useSelector } from "react-redux";
 import MovieItem from './MovieItem';
-import { getMovies } from "../../../api";
-import {Props, IMovie} from './types';
+import EditMoviePopup from 'reactjs-popup';
+import AddEditContext from '../../Popups/AddEditPopup';
+import DeleteContext from '../../Popups/DeletePopup';
+import { createMovie, getMovies, updateMovie } from "../../../store/slices/movies";
+import {useAppDispatch} from "../../../store";
+import {TFilterProps, TMovie} from '../../../api/types';
 import styles from './index.module.css';
+import { MovieContext } from "../../../contextProviders";
+import {selectMovies, selectMovieFilters} from "../../../store/slices/movies/selectors";
 
-const Movies:React.FC<Props> = ({filter, sort}) => {
-  const [movies, setMovies] = useState<IMovie[] | null>(null);
+const popupWrapper = {
+  border: 0,
+  backgroundColor: '#232323',
+  padding: 0
+};
+
+const Movies:React.FC = () => {
+  const dispatch = useAppDispatch();
+  const moviesData = useSelector(selectMovies) ?? {};
+  const movies = moviesData?.data ?? [];
+  const moviesTotal = moviesData?.totalAmount ?? 0;
+  const [{addMovieOpened: addMovie}, actions] = useContext(MovieContext);
+  const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false);
+  const [contextAction, setContextAction] = useState<string>('');
+  const filters: TFilterProps = useSelector(selectMovieFilters);
+
+  const onActionClick = useCallback((action: string, movie?: TMovie)=>{
+    switch(action) {
+      case 'edit':
+        setIsOpenPopup(true);
+        break;
+      case 'delete':
+        setIsOpenPopup(true);
+        break;
+      default:
+        setIsOpenPopup(false);
+    };
+    actions.SET_MOVIE(movie);
+    setContextAction(action);
+  },[actions, setIsOpenPopup, setContextAction]);
+  const onClosePopup=useCallback(()=>{setIsOpenPopup(false)},[setIsOpenPopup]);
+  const onSave = useCallback((data: TMovie)=>{
+    if (data.id) {
+      dispatch(updateMovie(data));
+    } else {
+      dispatch(createMovie(data));
+    }
+    setIsOpenPopup(false);
+  },[dispatch, setIsOpenPopup]);
+
   useEffect(() => {
-    (async() => setMovies(await getMovies({filter, sort})))();
-  }, [setMovies]);
+    dispatch(getMovies(filters));
+  }, [dispatch, filters]);
+
+  useEffect(() => {
+    if(addMovie) {
+      onActionClick('edit');
+      actions.SET_ADD_MOVIE(false);
+    }
+  }, [addMovie, onActionClick, actions]);
 
   return (<div className={styles.wrapper}>
-    <div className={styles.resultsCount}>{`${movies?.length || 0} movies found`}</div>
+    <div className={styles.resultsCount}>{`${moviesTotal} movies found`}</div>
     <div className={styles.moviesList}>
-      {movies?.map((movie) => <MovieItem key={movie.id} movie={movie} />)}
+      {movies?.map((movie) => <MovieItem key={movie.id} movie={movie} onAction={onActionClick}/>)}
     </div>
+    <EditMoviePopup open={isOpenPopup} modal onClose={onClosePopup} contentStyle={popupWrapper}>
+      {contextAction === 'edit' && <AddEditContext onClose={onClosePopup} onConfirm={onSave}/>}
+      {contextAction === 'delete' && <DeleteContext onClose={onClosePopup}/>}
+    </EditMoviePopup>
   </div>);
 }
 
