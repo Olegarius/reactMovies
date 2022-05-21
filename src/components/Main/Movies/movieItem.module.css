@@ -5,6 +5,10 @@
     position: relative;
 }
 
+.image {
+  height: 486px;
+  width: 323px;
+}
 .image:hover {
     opacity: 0.8;
 }

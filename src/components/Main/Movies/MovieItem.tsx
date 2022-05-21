@@ -1,13 +1,13 @@
 import React, {MouseEvent, useCallback, useState, useContext} from "react";
 
 import ContextMenu from '../../Popups/ContextMenu';
-import {IMovie} from './types';
+import {TMovie} from '../../../api/types';
 import styles from './movieItem.module.css';
 import { MovieContext } from "../../../contextProviders";
 
 type Props = {
-  movie: IMovie;
-  onAction: (action: string, movie: IMovie) => void;
+  movie: TMovie;
+  onAction: (action: string, movie: TMovie) => void;
 }
 const MovieItem:React.FC<Props> = ({movie, onAction}) => {
   const [, actions] = useContext(MovieContext);
@@ -29,16 +29,17 @@ const MovieItem:React.FC<Props> = ({movie, onAction}) => {
 
   const onActionClick = useCallback((action: string)=>(event: MouseEvent<HTMLDivElement>)=>{
     event.stopPropagation();
+    setShowContextMenu(false);
     onAction(action, movie);
-  }, []);
+  }, [setShowContextMenu, onAction, movie]);
 
   return (<div className={styles.wrapper} onClick={onOpenDetails} onContextMenu={handleContextMenu}>
-    <img src={movie.image} className={styles.image}/>
+    <img src={movie.poster_path} className={styles.image}/>
     <div className={styles.titleWrapper}>
       <div className={styles.title}>{movie.title}</div>
-      <div className={styles.year}>{(new Date(movie.release_date)).getFullYear()}</div>
+      <div className={styles.year}>{movie?.release_date && (new Date(movie.release_date)).getFullYear()}</div>
     </div>
-    <div className={styles.genre}>{movie.genre.join(', ')}</div>
+    <div className={styles.genre}>{movie?.genres?.length && movie.genres.join(', ')}</div>
     {showContextMenu && (<ContextMenu onClick={onActionClick}/>)}
   </div>);
 }

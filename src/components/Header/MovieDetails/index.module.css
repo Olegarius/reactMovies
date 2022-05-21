@@ -66,6 +66,11 @@
     margin-bottom: 4px;
 }
 
+.image {
+    height: 486px;
+    width: 323px;
+}
+
 .genre {
     font-weight: 500;
     font-size: 14px;

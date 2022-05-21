@@ -1,14 +1,14 @@
-import { IMovie } from '../../components/Main/Movies/types';
+import { TMovie } from '../../api/types';
 import types from './actionTypes';
 
 const actions = {
-  [types.SET_MOVIE]: (dispatch: React.Dispatch<any>) => (movie: IMovie | null) => {
+  [types.SET_MOVIE]: (dispatch: React.Dispatch<any>) => (movie: TMovie | null) => {
     dispatch({
       type: types.SET_MOVIE,
       payload: movie,
     });
   },
-  [types.SET_SELECTED_MOVIE]: (dispatch: React.Dispatch<any>) => (movie: IMovie | null) => {
+  [types.SET_SELECTED_MOVIE]: (dispatch: React.Dispatch<any>) => (movie: TMovie | null) => {
     dispatch({
       type: types.SET_SELECTED_MOVIE,
       payload: movie,

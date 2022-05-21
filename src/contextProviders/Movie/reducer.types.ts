@@ -1,13 +1,13 @@
 
-import {IMovie} from '../../components/Main/Movies/types';
+import {TMovie} from '../../api/types';
 
 export interface State {
-  movie: IMovie | null;
-  selectedMovie: IMovie | null;
+  movie: TMovie | null;
+  selectedMovie: TMovie | null;
   addMovieOpened: boolean;
 }
 
 export interface Action {
   type: string;
-  payload?: IMovie;
+  payload?: TMovie;
 }
