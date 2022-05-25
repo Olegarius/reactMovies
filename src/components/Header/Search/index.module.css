@@ -12,7 +12,7 @@
 .wrapper:before{
     z-index:-1;
     position:absolute;
-    content: url('../../images/bg.png');
+    content: url('../../../images/bg.png');
 }
 
 .logoWrapper {

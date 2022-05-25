@@ -1,0 +1,33 @@
+.base {
+    background: var(--color_dark_grey);
+    mix-blend-mode: normal;
+    opacity: 0.8;
+    border-radius: 4px;
+    height: 57px;
+    width: 100%;
+    color: var(--color_white);
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 13px;
+    padding: 0 18px;
+    border: 0;
+    box-sizing: border-box;
+}
+
+.textarea {
+    height: 197px;
+}
+
+.base:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+
+.title {
+    color: var(--color_red);
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-top: 30px;
+}

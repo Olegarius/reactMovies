@@ -4,13 +4,7 @@ import FilterItems from './FilterItems';
 import Orders from './Orders';
 import { getFilterItems } from "../../../api";
 
-type Props = {
-  onFilterChange: (newFilter: string) => void;
-  activeFilter: string;
-  onOrderChange: (newOrder: string) => () => void;
-  activeOrder: string;
-}
-const Filters:React.FC<Props> = ({onFilterChange, activeFilter, onOrderChange, activeOrder}) => {
+const Filters:React.FC = () => {
   const [filterItems, setFilterItems] = useState(null);
 
   useEffect(() => {
@@ -18,8 +12,8 @@ const Filters:React.FC<Props> = ({onFilterChange, activeFilter, onOrderChange, a
   }, [setFilterItems]);
 
 return (<div className={styles.wrapper}>
-    <FilterItems items={filterItems || []} activeFilter={activeFilter} onFilterChange={onFilterChange}/>
-    <Orders orderBy={activeOrder} onChangeOrder={onOrderChange}/>
+    <FilterItems items={(filterItems || []).slice(0,9)}/>
+    <Orders/>
   </div>);
 }
 
