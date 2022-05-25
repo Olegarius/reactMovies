@@ -1,69 +1,33 @@
-import React from 'react';
-import ReactSelect, { components, DropdownIndicatorProps, GroupBase, ActionMeta, MultiValue } from 'react-select';
-import DownIcon from './Down.svg';
-import styles from './index.module.css';
+import React, { useEffect } from 'react';
+import { useFormContext, RegisterOptions, Controller } from "react-hook-form";
+import useOnChangeValidate from "../../hooks/useOnChangeValidate";
 
-export interface OptionType {
-    value: string;
-    label: string;
+import Select, { OptionType } from "./Select";
+type Props = {
+    name: string;
+    title: string;
+    value: OptionType[] | null
+    isOnChangeValidation?: boolean,
+    rules?: Exclude<RegisterOptions, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' >;
+    options: OptionType[] | null;
+    [key: string]: any;
 }
+const SelectForm: React.FC<Props> = ({isOnChangeValidation, rules = {}, name, title, value, options, ...props}) => {
+    const { setValue, control } = useFormContext();
+    useEffect(()=>{
+        setValue(name, value);
+    },[name, value, setValue]);
+    useOnChangeValidate({ name, isOnChangeValidation });
 
-const IndicatorSeparator = () => null
-
-const DropdownIndicator = (props: JSX.IntrinsicAttributes & DropdownIndicatorProps<unknown, boolean, GroupBase<unknown>>) => {
-    return (
-        <components.DropdownIndicator {...props}>
-            <img src={DownIcon} className={styles.downIcon} />
-        </components.DropdownIndicator>
-    );
+    return (<Controller
+        name={name}
+        control={control}
+        rules={rules}
+        render={({field: { value }, fieldState: { error }}) => {return(
+        <div style={error ? {border: "1px solid red"} : {}}>
+            <Select {...props} name={name} title={title} options={options} value={value} onChange={(selected: OptionType[]) => setValue(name, selected)}/>
+        </div>)}}
+    />)
 };
 
-type Props = {
-    options: OptionType[] | null;
-    placeholder?: string;
-    onChange: (newValue: any, actionMeta: ActionMeta<unknown>) => void;
-    title?: string;
-    wrapperClassName?: string;
-    className?: string;
-    defaultValue?: OptionType[] | null;
-    value?: OptionType[] | null;
-}
-
-const Select:React.FC<Props> = ({options, placeholder, onChange, className = '', defaultValue, value='', wrapperClassName = '', title = ''}) => {
-    const defaultVal = !defaultValue ? options?.[0] : defaultValue;
-    const colourStyles = {
-        singleValue: (styles: any) => ({ ...styles, color: "#FFFFFF" }),
-        option: (styles: any) => {
-          return {
-            ...styles,
-            backgroundColor: "#424242",
-            color: "#FFFFFF",
-            "&:hover": {
-                backgroundColor: "#FFFFFF",
-                color: "#424242"
-              }
-          };
-        }
-      };
-
-      return (
-        <div className={`${styles.wrapper} ${wrapperClassName}`}>
-            <div className={styles.title}>{title}</div>
-            <ReactSelect
-                value={value}
-                defaultValue={defaultVal}
-                components={{ IndicatorSeparator, DropdownIndicator }}
-                placeholder={placeholder}
-                options={options || []}
-                onChange={onChange}
-                isClearable={false}
-                closeMenuOnSelect={false}
-                isMulti
-                className={`${styles.base} ${className}`}
-                styles={colourStyles}
-            />
-        </div>
-    );
-}
-
-export default Select;
+export default SelectForm;

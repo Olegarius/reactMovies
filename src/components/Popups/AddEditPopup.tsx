@@ -1,12 +1,13 @@
 import React, {useCallback, useEffect, useState, useContext} from "react";
-
+import Form from '../../elements/Form';
 import closeImg from './close.svg';
 import Button from '../../elements/Button';
 import {TMovie} from '../../api/types';
 import styles from './index.module.css';
 import DatePicker from "../../elements/DatePicker";
 import Input from "../../elements/Input";
-import Select, {OptionType} from "../../elements/Select";
+import Select from "../../elements/Select";
+import {OptionType} from "../../elements/Select/Select";
 import { getFilterItems } from "../../api";
 import { MovieContext } from "../../contextProviders";
 import { TFilter } from "../../store/slices/filters";
@@ -21,88 +22,80 @@ const AddEditPopup:React.FC<Props> = ({onClose, onConfirm}) => {
   const [{movie}] = useContext(MovieContext);
   const [filterItems, setFilterItems] = useState<OptionType[] | null>(null);
   const [currentGenres, setCurrentGenres] = useState<OptionType[] | null>(null);
-  const [releaseDate, setReleaseDate] = useState<string | null>(null);
+
+  const initialValues: any = {};
+  const formFields = {
+    title: {isRequired: true},
+    genres: {isRequired: true},
+    release_date: {},
+    runtime: {},
+    poster_path: {isRequired: true},
+    vote_average: {
+      valueAsNumber: true
+    },
+    overview: {isRequired: true}
+  };
+  Object.keys(formFields).forEach((field: string) => {
+    if (field === "genres") {
+      initialValues[field] = currentGenres || [];
+    } else if (field === "runtime") {
+      initialValues[field] = getDuration(movie?.[field] || "");
+    } else {
+      initialValues[field] = movie?.[field] || "";
+    }
+  });
+  const config = {
+    defaultValues: initialValues
+  }
 
   useEffect(() => {
     (async() => {
       const genres = await getFilterItems();
-      setFilterItems(genres);
       setCurrentGenres(genres.filter((genre: TFilter) => (movie?.genres ?? []).includes(genre.value)));
+      setFilterItems(genres);
     })();
   }, [setFilterItems, setCurrentGenres]);
 
-  const handleFormSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>): void => {
-      event.preventDefault();
-      const formData: any = {};
-      const formFields = [
-        "title",
-        "genres",
-        "release_date",
-        "runtime",
-        "poster_path",
-        "vote_average",
-        "overview"
-      ];
-      formFields.forEach((fieldName) => {
-        if (
-          event.currentTarget[fieldName]?.name === fieldName
-        ) {
-          formData[fieldName] = String(
-            event.currentTarget[fieldName]?.value || ''
-          ).trim();
-        }
-      });
-      formData.vote_average = Number(formData.vote_average);
+  const handleFormSubmit = useCallback((fields: Record<string, any> | undefined): void => {
+      const formData = fields || {};
+
       formData.genres = currentGenres?.map(genre => genre.value);
-      formData.release_date = releaseDate;
       formData.runtime = setDuration(formData.runtime);
 
       onConfirm({...movie, ...formData});
     },
-    [movie, currentGenres, releaseDate]
+    [movie, formFields]
   );
-  
-  const onResetHandler = useCallback(() => {
-    const data = {}; //TODO: set initial data to form
-  }, []);
 
-  const onChangeInput = useCallback((data: any) => {
-    //TODO: with formic
-  }, []);
+  const onResetHandler = useCallback((formMethods: any) => {
+    formMethods?.reset?.(config.defaultValues)
+  }, [config.defaultValues]);
 
-  const onChangeDate = useCallback((data: any) => {
-    setReleaseDate(data);
-  }, [setReleaseDate]);
-
-  const onChangeSelect = useCallback((selected: OptionType[] | null) => {
-    setCurrentGenres(selected);
-  }, [setCurrentGenres]);
-
-
-  return (<form className={styles.wrapper} onSubmit={handleFormSubmit}>
-    <div className={styles.close} onClick={onClose}><img src={closeImg}/></div>
-    <div className={styles.title}>Edit MOVIE</div>
-    <div className={`${styles.content} ${styles.editContent}`}>
-      <div className={styles.titleDateWrapper}>
-        <Input name="title" title="title" wrapperClassName={styles.inputWrapper} onChange={onChangeInput} value={movie?.title ?? ''}/>
-        <DatePicker title="release date" className={styles.inputDate} onChange={onChangeDate} value={new Date(movie?.release_date ?? new Date())}/>
+  return (<Form config={config} className={styles.wrapper} onSubmit={handleFormSubmit}>
+      <>
+      <div className={styles.close} onClick={onClose}><img src={closeImg}/></div>
+      <div className={styles.title}>Edit MOVIE</div>
+      <div className={`${styles.content} ${styles.editContent}`}>
+        <div className={styles.titleDateWrapper}>
+          <Input name="title" title="title" wrapperClassName={styles.inputWrapper} value={movie?.title ?? ''} rules={formFields.title}/>
+          <DatePicker name="release_date" title="release date" className={styles.inputDate} value={new Date(movie?.release_date ?? new Date())} rules={formFields.release_date}/>
+        </div>
+        <div className={styles.titleDateWrapper}>
+          <Input name="poster_path" title="movie url" wrapperClassName={styles.inputWrapper} value={movie?.poster_path ?? ''} rules={formFields.poster_path}/>
+          <Input name="vote_average" title="rating" className={styles.inputDate} width="300px" value={movie?.vote_average ?? ''} rules={formFields.vote_average}/>
+        </div>
+        <div className={styles.titleDateWrapper}>
+          <Select name="genres" title="genre" wrapperClassName={styles.inputWrapper} options={filterItems} value={currentGenres}/>
+          <Input name="runtime" title="runtime" className={styles.inputDate} width="300px" value={getDuration(movie?.runtime)} rules={formFields.runtime}/>
+        </div>
       </div>
-      <div className={styles.titleDateWrapper}>
-        <Input name="poster_path" title="movie url" wrapperClassName={styles.inputWrapper} onChange={onChangeInput} value={movie?.poster_path ?? ''}/>
-        <Input name="vote_average" title="rating" className={styles.inputDate} width="300px" onChange={onChangeInput} value={movie?.vote_average ?? ''}/>
+      <Input name="overview" title="overview" type="textarea" className={styles.textarea} height="197px" width="100%" value={movie?.overview} rules={formFields.overview}/>
+      <div className={styles.buttonWrapper}>
+        <Button type="reset" onClick={onResetHandler} className={styles.button}>reset</Button>
+        <Button type="submit" className={styles.button}>submit</Button>
       </div>
-      <div className={styles.titleDateWrapper}>
-        <Select title="genre" wrapperClassName={styles.inputWrapper} options={filterItems} onChange={onChangeSelect} value={currentGenres}/>
-        <Input name="runtime" title="runtime" className={styles.inputDate} width="300px" onChange={onChangeInput} value={getDuration(movie?.runtime)}/>
-      </div>
-    </div>
-    <Input name="overview" title="overview" type="textarea" className={styles.textarea} height="197px" width="100%" onChange={onChangeInput} value={movie?.overview}/>
-    <div className={styles.buttonWrapper}>
-      <Button type="reset" onClick={onResetHandler} className={styles.button}>reset</Button>
-      <Button type="submit" className={styles.button}>submit</Button>
-    </div>
-  </form>);
+      </>
+    </Form>);
 }
 
   export default AddEditPopup;

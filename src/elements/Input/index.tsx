@@ -1,38 +1,30 @@
-import React, { useCallback, useState } from 'react';
-import styles from './index.module.css';
+import React from 'react';
+import { useFormContext, Controller } from "react-hook-form";
+import useOnChangeValidate from "../../hooks/useOnChangeValidate";
 
+import Input from "./Input";
 type Props = {
     name: string;
-    onChange: (value: string) => void;
-    width?: string;
-    height?: string;
-    className?: string;
-    value?: string | number;
-    type?: string;
-    placeholder?: string;
-    title?: string;
-    wrapperClassName?: string;
+    title: string;
+    isOnChangeValidation?: boolean,
+    rules?: object;
+    [key: string]: any;
 }
+const InputForm: React.FC<Props> = ({isOnChangeValidation, rules = {}, name, title, ...props}) => {
+    const { setValue, control, formState: { errors } } = useFormContext();
 
-const Input:React.FC<Props> = ({name, onChange, width, height, wrapperClassName = '', placeholder='', title = '', type = 'text', value: defaultValue = '', className = '', ...props}) => {
-    const [value, setValue] = useState(defaultValue);
-    const onChangeHandler = useCallback((e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
-        const currentValue = e.currentTarget.value || '';
-        setValue(currentValue);
-        onChange(currentValue);
-    }, [setValue]);
+    useOnChangeValidate({ name, isOnChangeValidation });
 
-    const extendedStyles = {
-        ...(width && {width}),
-        ...(height && {height}),
-    };
-        return (
-            <div className={`${styles.wrapper} ${wrapperClassName}`}>
-                <div className={styles.title}>{title}</div>
-                {type === 'textarea' ? <textarea name={name} className={`${styles.base} ${styles.textarea} ${className}`} style={extendedStyles} placeholder={placeholder} value={value} onChange={onChangeHandler} {...props} />
-                : <input name={name} type={type} className={`${styles.base} ${className}`} style={extendedStyles} placeholder={placeholder} value={value} onChange={onChangeHandler} {...props} />}
+    return (<Controller
+        name={name}
+        control={control}
+        rules={rules}
+        render={({field: { value }, fieldState: { error }}) => (
+            <div style={error ? {border: "1px solid red"} : {}}>
+                <Input {...props} name={name} title={title} value={value} onChange={(value: string | number) => {setValue(name, value);}} />
             </div>
-        )
+        )}
+    />)
 };
 
-export default Input;
+export default InputForm;

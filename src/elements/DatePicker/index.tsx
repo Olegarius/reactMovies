@@ -1,28 +1,21 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import CoreDatePicker from 'react-date-picker';
+import React from 'react';
+import { useFormContext, RegisterOptions } from "react-hook-form";
+import useOnChangeValidate from "../../hooks/useOnChangeValidate";
 
-import {formatDate} from "../../helpers/converters";
-import calendarIcon from './Calendar.svg';
-import styles from './index.module.css';
-
+import DatePicker from "./DatePicker";
 type Props = {
-    onChange: (value: string) => void;
-    className?: string;
-    value?: Date;
-    title?: string;
+    name: string;
+    title: string;
+    isOnChangeValidation?: boolean,
+    rules?: Exclude<RegisterOptions, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' >;
+    [key: string]: any;
 }
-const CalendarIcon:React.FC = () => <img src={calendarIcon} />;
-const DatePicker:React.FC<Props> = ({onChange, title = '', value: defaultValue = new Date(), className = ''}) => {
-    const [value, setValue] = useState<Date | null | undefined>(defaultValue);
-    useEffect(() => {
-        value && onChange(formatDate(value));
-    }, [value]);
-        return (
-            <div className={styles.wrapper}>
-                <div className={styles.title}>{title}</div>
-                <CoreDatePicker format="MM/dd/yyyy" onChange={setValue} value={value} className={className} clearIcon={null} calendarIcon={<CalendarIcon/>} />
-            </div>
-        )
+const SelectForm: React.FC<Props> = ({isOnChangeValidation, rules = {}, name, title, ...props}) => {
+    const { setValue } = useFormContext();
+
+    useOnChangeValidate({ name, isOnChangeValidation });
+
+    return (<DatePicker {...props} name={name} title={title} onChange={(value: string) => setValue(name, value)}/>)
 };
 
-export default DatePicker;
+export default SelectForm;

@@ -1,24 +1,21 @@
 import React from 'react';
-import styles from './index.module.css';
+import { useFormState, useFormContext } from "react-hook-form";
+import Button from "./Button";
 
 type Props = {
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
-    width?: string;
-    height?: string;
+    onClick?: any;
     type?: 'submit' | 'reset' | 'button' | undefined;
-    className?: string;
     children: JSX.Element | string;
+    disabled?: boolean;
+    [key: string]: any;
 }
 
-const Button:React.FC<Props> = ({children, onClick, width = '233px', height = '57px', type = 'submit', className = ''}) => {
-    const extendedStyles = {
-        ...(width && {width}),
-        ...(height && {height}),
-    };
-    const extProps = {
-        ...(onClick && {onClick})
-    };
-    return <button type={type} className={`${styles.base} ${styles[type]} ${className}`} style={extendedStyles} {...extProps}>{children}</button>
+const ButtonForm: React.FC<Props> = ({children, onClick = () => {}, type = 'submit', disabled = false, ...props}) => {
+    const formMethods = useFormContext();
+    const { isDirty, isValid, isSubmitting } = useFormState();
+    const disabledFlag = disabled || (type !== "reset" && (isDirty || !isValid || isSubmitting));
+
+    return <Button disabled={disabledFlag} onClick={() => onClick(formMethods)} type={type} {...props}>{children}</Button>
 };
 
-export default Button;
+export default ButtonForm;
