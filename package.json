@@ -26,6 +26,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+	"coverage": "npm run test -- --coverage --collectCoverageFrom=src/**/*.js --collectCoverageFrom=src/**/*.ts --collectCoverageFrom=src/**/*.tsx --collectCoverageFrom=\\!**/__tests__/** --collectCoverageFrom=!src/**/*.stories.tsx",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

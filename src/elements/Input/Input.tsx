@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import styles from './index.module.css';
 
 type Props = {
@@ -15,12 +15,9 @@ type Props = {
 }
 
 const Input:React.FC<Props> = ({name, value, onChange = () => {}, width, height, wrapperClassName = '', placeholder='', title = '', type = 'text', value: defaultValue = '', className = '', ...props}) => {
-    //const [value, setValue] = useState(defaultValue);
-
     const onChangeHandler = useCallback((e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
         const currentValue = String(e?.currentTarget?.value || '');
         onChange(currentValue);
-        //setValue(value);
     }, []);
 
     const extendedStyles = {

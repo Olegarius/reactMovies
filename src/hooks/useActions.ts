@@ -8,7 +8,7 @@ const applyMiddleware = (dispatch: React.Dispatch<any>) => (action: any) => {
   return dispatch(action);
 };
 
-const getActionCreators = (actionCreators: any, dispatch: React.Dispatch<any>) =>
+const getActionCreators = (actionCreators: object, dispatch: React.Dispatch<any>) =>
   Object.entries(actionCreators).reduce(
     (memo, [type, action]) => ({
       ...memo,
@@ -20,7 +20,7 @@ const getActionCreators = (actionCreators: any, dispatch: React.Dispatch<any>) =
     {}
   );
 
-export const useActions = (types: any, dispatch: React.Dispatch<any>, customActionCreators: any) => {
+export const useActions = (types: object, dispatch: React.Dispatch<any>, customActionCreators: object) => {
   return useMemo(() => {
     const enhancedDispatch = applyMiddleware(dispatch);
     const actionCreators = {...types, ...(customActionCreators || {})};
