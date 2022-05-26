@@ -26,7 +26,7 @@ return (<div className={styles.wrapper}>
       <div className={styles.confirmDelete}>Are you sure you want to delete this movie?</div>
     </div>
     <div className={styles.buttonWrapper}>
-      <Button onClick={onConfirm} className={styles.button}>confirm</Button>
+      <Button data-testid="deleteBtn" onClick={onConfirm} className={styles.button}>confirm</Button>
     </div>
   </div>);
 }

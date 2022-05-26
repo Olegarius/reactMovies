@@ -20,7 +20,7 @@ const getActionCreators = (actionCreators: object, dispatch: React.Dispatch<any>
     {}
   );
 
-export const useActions = (types: object, dispatch: React.Dispatch<any>, customActionCreators: object) => {
+export const useActions = (types: object, dispatch: React.Dispatch<any>, customActionCreators: object | null) => {
   return useMemo(() => {
     const enhancedDispatch = applyMiddleware(dispatch);
     const actionCreators = {...types, ...(customActionCreators || {})};

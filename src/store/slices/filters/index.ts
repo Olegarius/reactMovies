@@ -21,7 +21,7 @@ const initialState: TState = {
 };
 
 export const filterSlice = createSlice({
-  name: "filter",
+  name: "filters",
   initialState,
   reducers: {
     setCurrentFilter: (state, action: PayloadAction<TFilter>) => {
@@ -29,13 +29,10 @@ export const filterSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(
-      getFilterItems.fulfilled,
-      (state, action: PayloadAction<TFilter[]>) => {
+    builder.addCase(getFilterItems.fulfilled, (state, action: PayloadAction<TFilter[]>) => {
         state.filters = action.payload || [];
         state.loading = false;
-      }
-    );
+    });
     builder.addCase(getFilterItems.pending, (state) => {
       state.filters = [];
       state.loading = true;

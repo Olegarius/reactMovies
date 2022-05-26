@@ -5,7 +5,7 @@ export const getDuration = (time: number) => {
     const min = 60;
     const hours = 'h';
     const minutes = 'min';
-    const fullHours = Math.ceil(time / min);
+    const fullHours = Math.trunc(time / min);
     const fullMinutes = time % min;
 
     return `${fullHours}${hours} ${fullMinutes}${minutes}`;
@@ -36,4 +36,19 @@ export const formatDate = (date?: Date | null) => {
     day = day < 10 ? `0${day}` : day;
 
     return `${year}-${month}-${day}`;
+};
+
+type TSettings = {
+    name?: string;
+    age?: number;
+};
+type TUser =  {
+    settings?: TSettings;
+};
+type TOptions = {
+    user?: TUser;
+};
+
+export const optionalChainingForTest = (options?: TOptions) => {
+    return options?.user?.settings?.name || options?.user?.settings?.age || "";
 };

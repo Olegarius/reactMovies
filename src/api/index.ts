@@ -1,9 +1,11 @@
+import axios from "axios";
 import {SERVER} from "../const";
 import {TFilterProps, TMovie} from "./types";
 
 export const getFilterItems = async () => {
-    const data = await fetch('/data/filters.json');
-    return await data.json();
+    //return fetch('/data/filters.json').json();
+    const responseData: {data: any[]} = await axios.get('/data/filters.json');
+    return responseData.data;
 };
 
 export const getMovies = async (data: TFilterProps) => {
@@ -13,18 +15,16 @@ export const getMovies = async (data: TFilterProps) => {
 
     const resultData = await fetch(`${SERVER}/movies${params ? `?${params}` : ""}`);
 
-    return await resultData.json();
+    return resultData.json();
 };
 
 export const getMovie = async (id: string | number) => {
-    const resultData = await fetch(`${SERVER}/movies?id=${id}`);
+   const resultData = await fetch(`${SERVER}/movies?id=${id}`);
 
-    return await resultData.json();
+   return resultData.json();
 };
 
-export const removeMovie = async (id: string | number) => {
-    return await fetch(`${SERVER}/movies/${id}`, {method: 'DELETE'});
-};
+export const removeMovie = (id: string | number) => fetch(`${SERVER}/movies/${id}`, {method: 'DELETE'});
 
 export const createMovie = async (movie: TMovie) => {
     const resultData = await fetch(`${SERVER}/movies`, {
@@ -34,7 +34,7 @@ export const createMovie = async (movie: TMovie) => {
         },
         body: JSON.stringify(movie)
     });
-    return await resultData.json();
+    return resultData.json();
 };
 
 export const updateMovie = async (movie: TMovie) => {
@@ -45,5 +45,5 @@ export const updateMovie = async (movie: TMovie) => {
         },
         body: JSON.stringify(movie)
     });
-    return await resultData.json();
+    return resultData.json();
 };

@@ -3,12 +3,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as service from "../../../api";
 import {TFilterProps, TMovie} from "../../../api/types";
 
-export const getMovies = createAsyncThunk("getMovies", async (filterData: TFilterProps) => await service.getMovies(filterData));
+export const getMovies = createAsyncThunk("getMovies", (filterData: TFilterProps) => service.getMovies(filterData));
 
-export const getMovie = createAsyncThunk("getMovie", async (id: string | number) => await service.getMovie(id));
+export const getMovie = createAsyncThunk("getMovie", (id: string | number) => service.getMovie(id));
 
-export const createMovie = createAsyncThunk("createMovie", async (data: TMovie) => await service.createMovie(data));
+export const createMovie = createAsyncThunk("createMovie", (data: TMovie) => service.createMovie(data));
 
-export const updateMovie = createAsyncThunk("updateMovie", async (data: TMovie) => await service.updateMovie(data));
+export const updateMovie = createAsyncThunk("updateMovie", (data: TMovie) => service.updateMovie(data));
 
-export const removeMovie = createAsyncThunk("removeMovie", async (id: string | number) => await service.removeMovie(id));
+export const removeMovie = createAsyncThunk("removeMovie", (id: string | number) => service.removeMovie(id));
