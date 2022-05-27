@@ -9,7 +9,7 @@ jest.mock('react', () => ({
 }));
 
 describe('Given useActions hook', () => {
-  it('When useActions called. Then it should return function setRegion', () => {
+  it('When useActions called. Then it should return function', () => {
     // mocks
     const mockDispatch = jest.fn((data) => data);
     const mockState = 'evidence';
@@ -38,7 +38,7 @@ describe('Given useActions hook', () => {
       mockActionTypeMethods
     );
 
-      // Then it should return function setMovie
+    // Then it should return function setMovie
     expect(actualActions[mockReducerTypes.GET_MOVIE](mockState)).toEqual(mockActionTypeObject);
 
   });

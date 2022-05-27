@@ -27,6 +27,6 @@ import App from './App';
 test('renders learn react link', () => {
   render(<App />);
   const mainText = screen.getByText(/Main/i);
-  //screen.debug();
+  screen.debug();
   expect(mainText).toBeInTheDocument();
 });
