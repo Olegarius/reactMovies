@@ -1,23 +1,40 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
+
+import { useSelector } from "react-redux";
+import {useAppDispatch} from "../../../store";
+import {selectMovieFilters} from "../../../store/slices/movies/selectors";
+import { setMovieFilter } from "../../../store/slices/movies";
+
 import styles from './index.module.css';
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
   items: {
-    title: string;
+    label: string;
     value: string;
-  }[],
-  activeFilter: string;
-  onFilterChange: (filter: string) => void;
+  }[]
 };
 
-const FilterItems:React.FC<Props> = ({items, activeFilter, onFilterChange}) => {
-  const setFilter = useCallback((filterValue: string) => () => onFilterChange(filterValue), []);
-  return (<div className={styles.filterWrapper}>{items.map(item => {
-    return (
-      <div className={`${styles.filterItem} ${item.value === activeFilter ? styles.active : ''}`} key={item.value} onClick={setFilter(item.value)}>{item.title}</div>
-    )
+const FilterItems:React.FC<Props> = ({items}) => {
+  let [searchParams, setSearchParams] = useSearchParams();
+  const searchURLString = Object.fromEntries(searchParams)
+  const dispatch = useAppDispatch();
+  const movieFilters = useSelector(selectMovieFilters);
+  const activeFilter = searchParams.get("filter") || movieFilters?.filter?.[0] || "";
+  const setFilter = useCallback((filterValue: string) => () => {
+    const filterString = {...searchURLString, filter: filterValue};
+    setSearchParams(filterString, { replace: true });
+    dispatch(setMovieFilter({filter: [filterValue]}));
+  }, []);
 
-  })}</div>);
-}
+  useEffect(() => {
+    dispatch(setMovieFilter({filter: [activeFilter]}));
+  }, [activeFilter, dispatch]);
 
-  export default FilterItems;
+  return (<div className={styles.filterWrapper}>{items.map(item => (
+      <div className={`${styles.filterItem} ${item.value === activeFilter ? styles.active : ''}`} key={item.value} onClick={setFilter(item.value)}>{item.label}</div>
+    ))}
+  </div>);
+};
+
+export default FilterItems;

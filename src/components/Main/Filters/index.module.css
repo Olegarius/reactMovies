@@ -12,7 +12,9 @@
     height: 62px;
     display: flex;
     align-items: center;
+    white-space: nowrap;
 }
+
 .filterItem {
     position: relative;
     z-index: 1;

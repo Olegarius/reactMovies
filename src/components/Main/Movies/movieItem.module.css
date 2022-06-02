@@ -2,8 +2,13 @@
     width: 323px;
     cursor: pointer;
     margin-bottom: 50px;
+    position: relative;
 }
 
+.image {
+  height: 486px;
+  width: 323px;
+}
 .image:hover {
     opacity: 0.8;
 }

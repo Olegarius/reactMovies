@@ -1,0 +1,36 @@
+import React, { useCallback } from 'react';
+import styles from './index.module.css';
+
+type Props = {
+    name: string;
+    onChange?: (value: string | number) => void;
+    width?: string;
+    height?: string;
+    className?: string;
+    value?: string | number;
+    type?: string;
+    placeholder?: string;
+    title?: string;
+    wrapperClassName?: string;
+}
+
+const Input:React.FC<Props> = ({name, value, onChange = () => {}, width, height, wrapperClassName = '', placeholder='', title = '', type = 'text', value: defaultValue = '', className = '', ...props}) => {
+    const onChangeHandler = useCallback((e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
+        const currentValue = String(e?.currentTarget?.value || '');
+        onChange(currentValue);
+    }, []);
+
+    const extendedStyles = {
+        ...(width && {width}),
+        ...(height && {height}),
+    };
+        return (
+            <div className={`${styles.wrapper} ${wrapperClassName}`}>
+                <div className={styles.title}>{title}</div>
+                {type === 'textarea' ? <textarea name={name} className={`${styles.base} ${styles.textarea} ${className}`} style={extendedStyles} placeholder={placeholder} value={value} onChange={onChangeHandler} {...props} />
+                : <input name={name} type={type} className={`${styles.base} ${className}`} style={extendedStyles} placeholder={placeholder} value={value} onChange={onChangeHandler} {...props} />}
+            </div>
+        )
+};
+
+export default Input;
