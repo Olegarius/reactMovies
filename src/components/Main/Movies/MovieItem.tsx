@@ -4,12 +4,15 @@ import ContextMenu from '../../Popups/ContextMenu';
 import {TMovie} from '../../../api/types';
 import styles from './movieItem.module.css';
 import { MovieContext } from "../../../contextProviders";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
   movie: TMovie;
   onAction: (action: string, movie: TMovie) => void;
 }
 const MovieItem:React.FC<Props> = ({movie, onAction}) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const movieString = Object.fromEntries(searchParams)
   const [, actions] = useContext(MovieContext);
   const [showContextMenu, setShowContextMenu] = useState(false);
   const handleContextMenu = useCallback(
@@ -24,8 +27,9 @@ const MovieItem:React.FC<Props> = ({movie, onAction}) => {
     if (showContextMenu) {
       setShowContextMenu(false);
     }
+    setSearchParams({...movieString, movie: String(movie?.id)}, { replace: true });
     actions.SET_SELECTED_MOVIE(movie);
-  }, [showContextMenu, setShowContextMenu, actions.SET_MOVIE]);
+  }, [showContextMenu, setSearchParams, setShowContextMenu, actions.SET_SELECTED_MOVIE]);
 
   const onActionClick = useCallback((action: string)=>(event: MouseEvent<HTMLDivElement>)=>{
     event.stopPropagation();

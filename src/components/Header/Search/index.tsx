@@ -6,19 +6,24 @@ import { useSelector } from "react-redux";
 import {useAppDispatch} from "../../../store";
 import {selectMovieFilters} from "../../../store/slices/movies/selectors";
 import { setMovieFilter } from "../../../store/slices/movies";
+import { useParams, useNavigate, createSearchParams, useSearchParams } from "react-router-dom";
+import { generatePath } from "react-router";
 
 const Search:React.FC = () => {
+  const { '*': searchQuery} = useParams();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const searchURLString = Object.fromEntries(searchParams);
   const dispatch = useAppDispatch();
   const movieFilters = useSelector(selectMovieFilters);
-  const search = movieFilters?.search || "";
+  const search = movieFilters?.search || searchQuery;
   const [isPending, startTransistion] = useTransition();
-  //console.log(isPending);
+
   const [searchValue, setSearchValue] = useState(search);
   const [filterValue, setFilterValue] = useState(search);
   const [, actions] = useContext(MovieContext);
 
   useEffect(() => {
-    console.log(filterValue);
     dispatch(setMovieFilter({search: filterValue}));
   }, [filterValue]);
 
@@ -27,10 +32,15 @@ const Search:React.FC = () => {
   const onChangeSearch = useCallback((e: React.FormEvent<HTMLInputElement>) => {
     const searchValue = e?.currentTarget?.value || "";
     setSearchValue(searchValue);
+    const pathname = generatePath("/search/*", {"*": searchValue});
+    navigate({
+      pathname,
+      search: createSearchParams(searchURLString).toString()
+    }, { replace: true });
     startTransistion(() => {
       setFilterValue(searchValue);
     });
-  }, [dispatch, setSearchValue, setFilterValue, startTransistion]);
+  }, [searchURLString, navigate, dispatch, setSearchValue, setFilterValue, startTransistion]);
 
   return (
     <div className={styles.wrapper}>

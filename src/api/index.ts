@@ -19,7 +19,7 @@ export const getMovies = async (data: TFilterProps) => {
 };
 
 export const getMovie = async (id: string | number) => {
-   const resultData = await fetch(`${SERVER}/movies?id=${id}`);
+   const resultData = await fetch(`${SERVER}/movies/${id}`);
 
    return resultData.json();
 };

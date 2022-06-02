@@ -3,10 +3,16 @@ import styles from './index.module.css';
 import { MovieContext } from "../../../contextProviders";
 import searchUrl from "../../../images/search.svg";
 import {getDuration} from "../../../helpers/converters";
+import { useSearchParams } from "react-router-dom";
 
 const MovieDetails:React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const movieString = Object.fromEntries(searchParams)
   const [{selectedMovie: movie}, actions] = useContext(MovieContext);
-  const onSearchHandler = useCallback(() => actions.SET_SELECTED_MOVIE(null), []);
+  const onSearchHandler = useCallback(() => {
+    setSearchParams({...movieString, movie: ""}, { replace: true });
+    actions.SET_SELECTED_MOVIE(null);
+  }, [movieString, setSearchParams, actions.SET_SELECTED_MOVIE]);
 
   return (
     <div className={styles.wrapper}>

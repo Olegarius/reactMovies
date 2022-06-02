@@ -3,9 +3,9 @@ import {SORT_ORDER, SORT_VALUES} from "../const";
 
 export type TFilterProps = {
     sortBy?: string | null;
-    sortOrder?: SORT_ORDER | null;
+    sortOrder?: string | null;
     search?: string | null;
-    searchBy?: SORT_VALUES | null;
+    searchBy?: string | null;
     filter?: string[] | null;
     offset?: string | number | null;
     limit?: string | number | null;

@@ -1,16 +1,17 @@
-import React, {useEffect, useState, useCallback, useContext, useDeferredValue} from "react";
+import React, {useEffect, useState, useCallback, useContext, useDeferredValue, useRef} from "react";
 import 'reactjs-popup/dist/index.css';
 import { useSelector } from "react-redux";
 import MovieItem from './MovieItem';
 import EditMoviePopup from 'reactjs-popup';
 import AddEditContext from '../../Popups/AddEditPopup';
 import DeleteContext from '../../Popups/DeletePopup';
-import { createMovie, getMovies, updateMovie } from "../../../store/slices/movies";
+import { createMovie, getMovies, getMovie, updateMovie } from "../../../store/slices/movies";
 import {useAppDispatch} from "../../../store";
 import {TFilterProps, TMovie} from '../../../api/types';
 import styles from './index.module.css';
 import { MovieContext } from "../../../contextProviders";
-import {selectMovies, selectMovieFilters} from "../../../store/slices/movies/selectors";
+import {selectMovies, selectMovieFilters, selectSelectedMovie} from "../../../store/slices/movies/selectors";
+import { useSearchParams } from "react-router-dom";
 
 const popupWrapper = {
   border: 0,
@@ -19,8 +20,11 @@ const popupWrapper = {
 };
 
 const Movies:React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const movieId = searchParams.get("movie");
   const dispatch = useAppDispatch();
   const moviesData = useDeferredValue(useSelector(selectMovies) ?? {});
+  const selectedMovieId = useSelector(selectSelectedMovie) ?? null;
   const movies = moviesData?.data ?? [];
   const moviesTotal = moviesData?.totalAmount ?? 0;
   const [{addMovieOpened: addMovie}, actions] = useContext(MovieContext);
@@ -52,9 +56,26 @@ const Movies:React.FC = () => {
     setIsOpenPopup(false);
   },[dispatch, setIsOpenPopup]);
 
+  const timeout = useRef<null | ReturnType<typeof setTimeout>>(null);
   useEffect(() => {
-    dispatch(getMovies(filters));
-  }, [dispatch, filters]);
+    if(timeout.current) {
+      clearTimeout(timeout.current);
+    }
+    timeout.current = setTimeout(() => {
+      dispatch(getMovies(filters));
+    }, 100);
+  }, [dispatch, filters, timeout]);
+
+
+  useEffect(() => {
+    if (movieId && !selectedMovieId) {
+      dispatch(getMovie(movieId));
+   } else if (movieId && selectedMovieId) {
+      actions.SET_SELECTED_MOVIE(selectedMovieId);
+   } else {
+      actions.SET_SELECTED_MOVIE(null);
+   }
+  }, [actions, movieId, selectedMovieId]);
 
   useEffect(() => {
     if(addMovie) {

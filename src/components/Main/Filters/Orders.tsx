@@ -6,15 +6,24 @@ import {selectMovieFilters} from "../../../store/slices/movies/selectors";
 import { setMovieFilter } from "../../../store/slices/movies";
 import { SORT_VALUES } from "../../../const";
 import styles from './index.module.css';
+import { useSearchParams } from "react-router-dom";
 
 const Orders:React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchURLString = Object.fromEntries(searchParams)
   const dispatch = useAppDispatch();
   const movieFilters = useSelector(selectMovieFilters);
-  const orderBy = movieFilters?.searchBy || SORT_VALUES.TITLE;
+  const orderBy = searchParams.get("genre") || movieFilters?.searchBy || SORT_VALUES.TITLE;
+
+  const onChangeOrder = useCallback((searchBy: string) => () => {
+    const searchString = {...searchURLString, genre: searchBy};
+    setSearchParams(searchString, { replace: true });
+    dispatch(setMovieFilter({searchBy}));
+  }, []);
+
   useEffect(() => {
     dispatch(setMovieFilter({searchBy: orderBy}));
   }, [dispatch]);
-  const onChangeOrder = useCallback((searchBy: SORT_VALUES) => () => dispatch(setMovieFilter({searchBy})), []);
 
   return (<div className={styles.orderWrapper}>
     <div className={styles.orderTitle}>Sort by</div>
