@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import OrderSelect from './OrederSelect';
 import { useSelector } from "react-redux";
 import {useAppDispatch} from "../../../store";
@@ -11,6 +11,9 @@ const Orders:React.FC = () => {
   const dispatch = useAppDispatch();
   const movieFilters = useSelector(selectMovieFilters);
   const orderBy = movieFilters?.searchBy || SORT_VALUES.TITLE;
+  useEffect(() => {
+    dispatch(setMovieFilter({searchBy: orderBy}));
+  }, [dispatch]);
   const onChangeOrder = useCallback((searchBy: SORT_VALUES) => () => dispatch(setMovieFilter({searchBy})), []);
 
   return (<div className={styles.orderWrapper}>

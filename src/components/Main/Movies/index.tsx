@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback, useContext} from "react";
+import React, {useEffect, useState, useCallback, useContext, useDeferredValue} from "react";
 import 'reactjs-popup/dist/index.css';
 import { useSelector } from "react-redux";
 import MovieItem from './MovieItem';
@@ -20,7 +20,7 @@ const popupWrapper = {
 
 const Movies:React.FC = () => {
   const dispatch = useAppDispatch();
-  const moviesData = useSelector(selectMovies) ?? {};
+  const moviesData = useDeferredValue(useSelector(selectMovies) ?? {});
   const movies = moviesData?.data ?? [];
   const moviesTotal = moviesData?.totalAmount ?? 0;
   const [{addMovieOpened: addMovie}, actions] = useContext(MovieContext);

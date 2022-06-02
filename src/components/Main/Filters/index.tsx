@@ -20,18 +20,5 @@ return (<div className={styles.wrapper}>
     <Orders/>
   </div>);
 }
-/*
-const Filters:React.FC = () => {
-  const [filterItems, setFilterItems] = useState<any[]>([]);
 
-  useEffect(() => {
-    (async() => setFilterItems(await getFilterItems()))();
-  }, [setFilterItems]);
-
-return (<div className={styles.wrapper}>
-    <FilterItems items={(filterItems || []).slice(0,9)}/>
-    <Orders/>
-  </div>);
-}
-*/
-  export default Filters;
+export default Filters;

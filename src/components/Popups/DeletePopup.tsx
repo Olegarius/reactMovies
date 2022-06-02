@@ -2,7 +2,7 @@ import React, {useCallback, useContext} from "react";
 import {useAppDispatch} from "../../store";
 import {removeMovie} from '../../store/slices/movies';
 import { MovieContext } from "../../contextProviders";
-import Button from "../../elements/Button";
+import Button from "../../elements/Button/Button";
 import closeImg from './close.svg';
 import styles from './index.module.css';
 

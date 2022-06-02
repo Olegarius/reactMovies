@@ -33,7 +33,7 @@ const initialState: TState = {
   filters: {
     sortOrder: SORT_ORDER.ASC,
     offset: 0,
-    limit: 12
+    limit: 120
   }
 };
 
