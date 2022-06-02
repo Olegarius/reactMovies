@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from "react";
 import downImg from '../../../images/down.svg';
-import { SORT_LIST } from "./const";
+import { SORT_LIST, SORT_VALUES } from "../../../const";
 import styles from './index.module.css';
 
 type Props = {
   orderBy: string;
-  onChangeOrder: (newOrder: string) => () => void;
+  onChangeOrder: (newOrder: SORT_VALUES) => () => void;
 }
 const OrderSelect:React.FC<Props> = ({orderBy, onChangeOrder}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

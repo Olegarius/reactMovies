@@ -1,22 +1,54 @@
 [
     {
-        "title": "All",
+        "label": "All",
         "value": ""
     },
     {
-        "title": "Documentary",
-        "value": "documentary"
+        "label": "Documentary",
+        "value": "Documentary"
     },
     {
-        "title": "Comedy",
-        "value": "comedy"
+        "label": "Comedy",
+        "value": "Comedy"
     },
     {
-        "title": "Horror",
-        "value": "horror"
+        "label": "Horror",
+        "value": "Horror"
     },
     {
-        "title": "Crime",
-        "value": "crime"
+        "label": "Crime",
+        "value": "Crime"
+    },
+    {
+        "label": "Drama",
+        "value": "Drama"
+    },
+    {
+        "label": "Romance",
+        "value": "Romance"
+    },
+    {
+        "label": "Animation",
+        "value": "Animation"
+    },
+    {
+        "label": "Adventure",
+        "value": "Adventure"
+    },
+    {
+        "label": "Family",
+        "value": "Family"
+    },
+    {
+        "label": "Fantasy",
+        "value": "Fantasy"
+    },
+    {
+        "label": "Science Fiction",
+        "value": "Science Fiction"
+    },
+    {
+        "label": "Action",
+        "value": "Action"
     }
 ]
