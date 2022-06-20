@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactSelect, { components, DropdownIndicatorProps, GroupBase, ActionMeta } from 'react-select';
+import { components, DropdownIndicatorProps, GroupBase, ActionMeta } from 'react-select';
 import DownIcon from './Down.svg';
-import styles from './index.module.css';
+import * as Styled from './styles';
 
 export interface OptionType {
     value: string;
@@ -13,7 +13,7 @@ const IndicatorSeparator = () => null
 const DropdownIndicator = (props: JSX.IntrinsicAttributes & DropdownIndicatorProps<unknown, boolean, GroupBase<unknown>>) => {
     return (
         <components.DropdownIndicator {...props}>
-            <img src={DownIcon} className={styles.downIcon} />
+            <Styled.DownIcon src={DownIcon} />
         </components.DropdownIndicator>
     );
 };
@@ -48,9 +48,9 @@ const Select:React.FC<Props> = ({name, options, placeholder, onChange, className
       };
 
       return (
-        <div className={`${styles.wrapper} ${wrapperClassName}`}>
-            <div className={styles.title}>{title}</div>
-            <ReactSelect
+        <Styled.Wrapper className={wrapperClassName}>
+            <Styled.Title>{title}</Styled.Title>
+            <Styled.ReactSelect
                 name={name}
                 value={value}
                 defaultValue={defaultVal}
@@ -61,10 +61,10 @@ const Select:React.FC<Props> = ({name, options, placeholder, onChange, className
                 isClearable={false}
                 closeMenuOnSelect={false}
                 isMulti
-                className={`${styles.base} ${className}`}
+                className={className}
                 styles={colourStyles}
             />
-        </div>
+        </Styled.Wrapper>
     );
 }
 

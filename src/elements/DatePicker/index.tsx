@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormContext, RegisterOptions } from "react-hook-form";
-import useOnChangeValidate from "../../hooks/useOnChangeValidate";
+import useOnChangeValidate from "hooks/useOnChangeValidate";
 
 import DatePicker from "./DatePicker";
 type Props = {

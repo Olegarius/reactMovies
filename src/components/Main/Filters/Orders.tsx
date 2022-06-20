@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect} from "react";
 import OrderSelect from './OrederSelect';
 import { useSelector } from "react-redux";
-import {useAppDispatch} from "../../../store";
-import {selectMovieFilters} from "../../../store/slices/movies/selectors";
-import { setMovieFilter } from "../../../store/slices/movies";
-import { SORT_VALUES } from "../../../const";
-import styles from './index.module.css';
+import {useAppDispatch} from "store";
+import {selectMovieFilters} from "store/slices/movies/selectors";
+import { setMovieFilter } from "store/slices/movies";
+import { SORT_VALUES } from "const";
+import * as Styled from './styles';
 import { useSearchParams } from "react-router-dom";
 
 const Orders:React.FC = () => {
@@ -25,10 +25,10 @@ const Orders:React.FC = () => {
     dispatch(setMovieFilter({searchBy: orderBy}));
   }, [dispatch]);
 
-  return (<div className={styles.orderWrapper}>
-    <div className={styles.orderTitle}>Sort by</div>
+  return (<Styled.OrderWrapper>
+    <Styled.OrderTitle>Sort by</Styled.OrderTitle>
     <OrderSelect orderBy={orderBy} onChangeOrder={onChangeOrder}/>
-  </div>);
+  </Styled.OrderWrapper>);
 }
 
   export default Orders;

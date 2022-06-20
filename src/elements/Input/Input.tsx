@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import styles from './index.module.css';
+import * as Styled from './styles';
 
 type Props = {
     name: string;
@@ -11,7 +11,7 @@ type Props = {
     type?: string;
     placeholder?: string;
     title?: string;
-    wrapperClassName?: string;
+    wrapperClassName?: any;
 }
 
 const Input:React.FC<Props> = ({name, value, onChange = () => {}, width, height, wrapperClassName = '', placeholder='', title = '', type = 'text', value: defaultValue = '', className = '', ...props}) => {
@@ -25,11 +25,11 @@ const Input:React.FC<Props> = ({name, value, onChange = () => {}, width, height,
         ...(height && {height}),
     };
         return (
-            <div className={`${styles.wrapper} ${wrapperClassName}`}>
-                <div className={styles.title}>{title}</div>
-                {type === 'textarea' ? <textarea name={name} className={`${styles.base} ${styles.textarea} ${className}`} style={extendedStyles} placeholder={placeholder} value={value} onChange={onChangeHandler} {...props} />
-                : <input name={name} type={type} className={`${styles.base} ${className}`} style={extendedStyles} placeholder={placeholder} value={value} onChange={onChangeHandler} {...props} />}
-            </div>
+            <Styled.Wrapper className={wrapperClassName}>
+                <Styled.Title>{title}</Styled.Title>
+                {type === 'textarea' ? <Styled.Textarea name={name} className={className} style={extendedStyles} placeholder={placeholder} value={value} onChange={onChangeHandler} {...props} />
+                : <Styled.Input name={name} type={type} className={className} style={extendedStyles} placeholder={placeholder} value={value} onChange={onChangeHandler} {...props} />}
+            </Styled.Wrapper>
         )
 };
 

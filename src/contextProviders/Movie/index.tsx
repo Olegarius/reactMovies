@@ -1,5 +1,5 @@
 import React, {useReducer, createContext} from 'react';
-import {useActions} from '../../hooks';
+import {useActions} from 'hooks';
 import reducer from './reducer';
 import actionCreators from './actions';
 import types from './actionTypes';

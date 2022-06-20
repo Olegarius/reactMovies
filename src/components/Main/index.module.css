@@ -1,6 +1,0 @@
-.wrapper {
-    width: calc(100% - 116px);
-    padding: 0 58px;
-    flex-grow: 1;
-    background-color: var(--color_black);
-}

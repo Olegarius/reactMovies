@@ -1,21 +1,27 @@
-.wrapper {
+import styled from "styled-components";
+import {colors} from "const";
+
+export const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    border-bottom: 1px solid var(--color_grey);
-}
+    border-bottom: 1px solid ${colors.color_grey};
+`;
 
-.filterWrapper {
+export const FilterWrapper = styled.div`
     position: relative;
     width: 100%;
     height: 62px;
     display: flex;
     align-items: center;
     white-space: nowrap;
-}
+`;
 
-.filterItem {
+type FilterItemProps = {
+    active?: string;
+};
+export const FilterItem = styled.div`
     position: relative;
     z-index: 1;
     display: flex;
@@ -26,39 +32,43 @@
     margin-right: 30px;
     font-weight: 500;
     cursor: pointer;
-}
+    border-bottom: ${
+        (props: FilterItemProps) => props.active ?
+            `4px solid ${colors.color_red}` :
+            "none"
+    };
+`;
 
-.filterItem.active {
-    border-bottom: 4px solid var(--color_red);
-}
-
-.orderWrapper {
+export const OrderWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     text-transform: uppercase;
     width: 260px;
     position: relative;
-}
+`;
 
-.orderTitle {
+export const OrderTitle = styled.div`
     white-space: nowrap;
-    color: var(--color_grey);
-}
+    color: ${colors.color_grey};
+`;
 
-.orderSelectWrapper {
+export const OrderSelectWrapper = styled.div`
     cursor: pointer;
     position: absolute;
     right: 0;
-}
+`;
 
-.orderSelectDownImg {
+export const OrderSelectDownImg = styled.img`
     margin-left: 13px;
     margin-top: 4px;
     text-align: right;
-}
+`;
 
-.selectedOrderWrapper {
+export const SelectedOrderWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+`;
+
+export const OrderList = styled.div``;
+export const OrderListItem = styled.div``;

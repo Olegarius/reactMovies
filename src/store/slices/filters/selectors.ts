@@ -1,4 +1,4 @@
-import { AppState } from "../../types";
+import { AppState } from "store/types";
 
 const selectSelf = (state: AppState) => state.filters;
 

@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect, useState, useTransition } from "react";
-import styles from './index.module.css';
-import logo from '../../../images/logo.png';
-import { MovieContext } from "../../../contextProviders";
+import * as Styled from './styles';
+import logo from 'images/logo.png';
+import { MovieContext } from "contextProviders";
 import { useSelector } from "react-redux";
-import {useAppDispatch} from "../../../store";
-import {selectMovieFilters} from "../../../store/slices/movies/selectors";
-import { setMovieFilter } from "../../../store/slices/movies";
+import {useAppDispatch} from "store";
+import {selectMovieFilters} from "store/slices/movies/selectors";
+import { setMovieFilter } from "store/slices/movies";
 import { useParams, useNavigate, createSearchParams, useSearchParams } from "react-router-dom";
 import { generatePath } from "react-router";
 
@@ -43,17 +43,17 @@ const Search:React.FC = () => {
   }, [searchURLString, navigate, dispatch, setSearchValue, setFilterValue, startTransistion]);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.logoWrapper}>
+    <Styled.Wrapper>
+      <Styled.LogoWrapper>
         <img src={logo}/>
-        <div className={styles.addMovie} onClick={onAddMovieHandler}>+ add movie</div>
-      </div>
-      <div className={styles.title}>FIND YOUR MOViE</div>
-      <div className={styles.searchWrapper}>
-        <input className={styles.searchInput} onChange={onChangeSearch} value={searchValue} placeholder="What do you want to watch?"/>
-        <input className={styles.searchButton} type="button" name="search" value="search" onClick={onSearch}/>
-      </div>
-    </div>
+        <Styled.AddMovie onClick={onAddMovieHandler}>+ add movie</Styled.AddMovie>
+      </Styled.LogoWrapper>
+      <Styled.Title>FIND YOUR MOViE</Styled.Title>
+      <Styled.SearchWrapper>
+        <Styled.SearchInput onChange={onChangeSearch} value={searchValue} placeholder="What do you want to watch?"/>
+        <Styled.SearchButton type="button" name="search" value="search" onClick={onSearch}/>
+      </Styled.SearchWrapper>
+    </Styled.Wrapper>
   );
 }
 

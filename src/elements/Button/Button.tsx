@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './index.module.css';
+import * as Styled from './styles';
 
 type Props = {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -19,7 +19,7 @@ const Button:React.FC<Props> = ({disabled = false, children, onClick, width = '2
     const extProps = {
         ...(onClick && {onClick})
     };
-    return <button disabled={disabled} type={type} className={`${styles.base} ${styles[type]} ${className}`} style={extendedStyles} {...extProps}>{children}</button>
+    return <Styled.Button disabled={disabled} type={type} className={className} style={extendedStyles} {...extProps}>{children}</Styled.Button>
 };
 
 export default Button;

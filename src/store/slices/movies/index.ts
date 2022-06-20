@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SORT_ORDER } from "../../../const";
-import {TMovie, TFilterProps} from "../../../api/types";
+import { SORT_ORDER } from "const";
+import {TMovie, TFilterProps} from "api/types";
 
 import {
   getMovie,

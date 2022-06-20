@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import * as service from "../../../api";
-import {TFilterProps, TMovie} from "../../../api/types";
+import * as service from "api";
+import {TFilterProps, TMovie} from "api/types";
 
 export const getMovies = createAsyncThunk("getMovies", (filterData: TFilterProps) => service.getMovies(filterData));
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Search from "../../composables/Search";
+import Search from "composables/Search";
 
 const SearchPage: React.FC = () => (<Search />);
 

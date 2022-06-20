@@ -3,14 +3,14 @@ import 'reactjs-popup/dist/index.css';
 import { useSelector } from "react-redux";
 import MovieItem from './MovieItem';
 import EditMoviePopup from 'reactjs-popup';
-import AddEditContext from '../../Popups/AddEditPopup';
-import DeleteContext from '../../Popups/DeletePopup';
-import { createMovie, getMovies, getMovie, updateMovie } from "../../../store/slices/movies";
-import {useAppDispatch} from "../../../store";
-import {TFilterProps, TMovie} from '../../../api/types';
-import styles from './index.module.css';
-import { MovieContext } from "../../../contextProviders";
-import {selectMovies, selectMovieFilters, selectSelectedMovie} from "../../../store/slices/movies/selectors";
+import AddEditContext from 'components/Popups/AddEditPopup';
+import DeleteContext from 'components/Popups/DeletePopup';
+import { createMovie, getMovies, getMovie, updateMovie } from "store/slices/movies";
+import {useAppDispatch} from "store";
+import {TFilterProps, TMovie} from 'api/types';
+import * as Styled from './styles';
+import { MovieContext } from "contextProviders";
+import {selectMovies, selectMovieFilters, selectSelectedMovie} from "store/slices/movies/selectors";
 import { useSearchParams } from "react-router-dom";
 
 const popupWrapper = {
@@ -84,16 +84,16 @@ const Movies:React.FC = () => {
     }
   }, [addMovie, onActionClick, actions]);
 
-  return (<div className={styles.wrapper}>
-    <div className={styles.resultsCount}>{`${moviesTotal} movies found`}</div>
-    <div className={styles.moviesList}>
+  return (<Styled.Wrapper>
+    <Styled.ResultsCount>{`${moviesTotal} movies found`}</Styled.ResultsCount>
+    <Styled.MoviesList>
       {movies?.map((movie) => <MovieItem key={movie.id} movie={movie} onAction={onActionClick}/>)}
-    </div>
+    </Styled.MoviesList>
     <EditMoviePopup open={isOpenPopup} modal onClose={onClosePopup} contentStyle={popupWrapper}>
       {contextAction === 'edit' && <AddEditContext onClose={onClosePopup} onConfirm={onSave}/>}
       {contextAction === 'delete' && <DeleteContext onClose={onClosePopup}/>}
     </EditMoviePopup>
-  </div>);
+  </Styled.Wrapper>);
 }
 
   export default Movies;

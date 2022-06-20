@@ -1,5 +1,5 @@
 
-import {TMovie} from '../../api/types';
+import {TMovie} from 'api/types';
 
 export interface State {
   movie: TMovie | null;

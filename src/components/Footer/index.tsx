@@ -1,11 +1,11 @@
 import React from "react";
-import logo from '../../images/logo.png';
-import styles from './index.module.css';
+import logo from 'images/logo.png';
+import * as Styled from './styles';
 
 const Footer = () => {
-  return (<div className={styles.wrapper}>
+  return (<Styled.Wrapper>
     <img src={logo}/>
-  </div>);
+  </Styled.Wrapper>);
 }
 
   export default Footer;

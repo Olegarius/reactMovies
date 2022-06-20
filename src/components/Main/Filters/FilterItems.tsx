@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from "react";
 
 import { useSelector } from "react-redux";
-import {useAppDispatch} from "../../../store";
-import {selectMovieFilters} from "../../../store/slices/movies/selectors";
-import { setMovieFilter } from "../../../store/slices/movies";
+import {useAppDispatch} from "store";
+import {selectMovieFilters} from "store/slices/movies/selectors";
+import { setMovieFilter } from "store/slices/movies";
 
-import styles from './index.module.css';
+import * as Styled from './styles';
 import { useSearchParams } from "react-router-dom";
 
 type Props = {
@@ -31,10 +31,10 @@ const FilterItems:React.FC<Props> = ({items}) => {
     dispatch(setMovieFilter({filter: [activeFilter]}));
   }, [activeFilter, dispatch]);
 
-  return (<div className={styles.filterWrapper}>{items.map(item => (
-      <div className={`${styles.filterItem} ${item.value === activeFilter ? styles.active : ''}`} key={item.value} onClick={setFilter(item.value)}>{item.label}</div>
+  return (<Styled.FilterWrapper>{items.map(item => (
+      <Styled.FilterItem active={item.value === activeFilter ? 'active' : ''} key={item.value} onClick={setFilter(item.value)}>{item.label}</Styled.FilterItem>
     ))}
-  </div>);
+  </Styled.FilterWrapper>);
 };
 
 export default FilterItems;

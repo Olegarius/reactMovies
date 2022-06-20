@@ -1,4 +1,4 @@
-import { TMovie } from '../../api/types';
+import { TMovie } from 'api/types';
 import types from './actionTypes';
 
 const actions = {

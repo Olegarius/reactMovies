@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ErrorBoundaryFunc } from "./helpers/errorboundary";
-import styles from './App.module.css';
+import * as Styled from "./styles";
 import {Routes} from './pages/Routes';
 import contextProviders from './contextProviders';
 import { IMovieProvider } from './contextProviders/Movie';
@@ -13,11 +13,11 @@ function App() {
         (memo, Provider: React.FC<IMovieProvider>) => (
           <Provider>{memo}</Provider>
         ),
-        <div className={styles.wrapper}>
-          <div className={styles.container}>
+        <Styled.Wrapper>
+          <Styled.Container>
             <Routes/>
-          </div>
-      </div>
+          </Styled.Container>
+        </Styled.Wrapper>
       )}
     </ErrorBoundaryFunc>
   );

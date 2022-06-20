@@ -19,3 +19,11 @@ export const SORT_LIST = [
         value: SORT_VALUES.GENRES
     }
 ];
+
+export const colors = {
+    color_red: '#F65261',
+    color_dark_grey: '#424242',
+    color_black: '#232323',
+    color_grey: '#555555',
+    color_white: '#FFFFFF'
+};

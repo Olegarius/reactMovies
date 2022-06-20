@@ -2,14 +2,13 @@ import React from "react";
 
 import Filters from './Filters/index';
 import Movies from './Movies';
-import styles from './index.module.css';
-import { SORT_LIST } from "../../const";
+import * as Styled from './styles';
 
 const Main:React.FC = () => (
-  <div className={styles.wrapper}>
+  <Styled.Wrapper>
     <Filters/>
     <Movies/>
-  </div>
+  </Styled.Wrapper>
 );
 
 export default Main;

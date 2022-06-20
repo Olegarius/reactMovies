@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import styles from './index.module.css';
+import * as Styled from './styles';
 import FilterItems from './FilterItems';
 import Orders from './Orders';
-import { useAppDispatch } from "../../../store";
-import { getFilterItems } from "../../../store/slices/filters";
-import { selectFilters } from "../../../store/slices/filters/selectors";
+import { useAppDispatch } from "store";
+import { getFilterItems } from "store/slices/filters";
+import { selectFilters } from "store/slices/filters/selectors";
 
 const Filters:React.FC = () => {
   const dispatch = useAppDispatch();
@@ -15,10 +15,10 @@ const Filters:React.FC = () => {
     dispatch(getFilterItems());
   }, [dispatch]);
 
-return (<div className={styles.wrapper}>
+return (<Styled.Wrapper>
     <FilterItems items={(filterItems || []).slice(0,9)}/>
     <Orders/>
-  </div>);
+  </Styled.Wrapper>);
 }
 
 export default Filters;

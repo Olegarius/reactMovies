@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CoreDatePicker from 'react-date-picker';
 
-import {formatDate} from "../../helpers/converters";
+import {formatDate} from "helpers/converters";
 import calendarIcon from './Calendar.svg';
-import styles from './index.module.css';
+import * as Styled from './styles';
 
 type Props = {
     onChange: (value: string) => void;
@@ -20,10 +20,10 @@ const DatePicker:React.FC<Props> = ({onChange, name, title = '', value: defaultV
         value && onChange(formatDate(value));
     }, [value]);
         return (
-            <div className={styles.wrapper}>
-                <div className={styles.title}>{title}</div>
+            <Styled.Wrapper>
+                <Styled.Title>{title}</Styled.Title>
                 <CoreDatePicker name={name} format="MM/dd/yyyy" onChange={setValue} value={value} className={className} clearIcon={null} calendarIcon={<CalendarIcon/>} />
-            </div>
+            </Styled.Wrapper>
         )
 };
 

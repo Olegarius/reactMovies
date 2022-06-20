@@ -1,9 +1,9 @@
 import React, {MouseEvent, useCallback, useState, useContext} from "react";
 
-import ContextMenu from '../../Popups/ContextMenu';
-import {TMovie} from '../../../api/types';
-import styles from './movieItem.module.css';
-import { MovieContext } from "../../../contextProviders";
+import ContextMenu from 'components/Popups/ContextMenu';
+import {TMovie} from 'api/types';
+import * as Styled from './stylesItem';
+import { MovieContext } from "contextProviders";
 import { useSearchParams } from "react-router-dom";
 
 type Props = {
@@ -37,15 +37,15 @@ const MovieItem:React.FC<Props> = ({movie, onAction}) => {
     onAction(action, movie);
   }, [setShowContextMenu, onAction, movie]);
 
-  return (<div className={styles.wrapper} onClick={onOpenDetails} onContextMenu={handleContextMenu}>
-    <img src={movie.poster_path} className={styles.image}/>
-    <div className={styles.titleWrapper}>
-      <div className={styles.title}>{movie.title}</div>
-      <div className={styles.year}>{movie?.release_date && (new Date(movie.release_date)).getFullYear()}</div>
-    </div>
-    <div className={styles.genre}>{movie?.genres?.length && movie.genres.join(', ')}</div>
+  return (<Styled.Wrapper onClick={onOpenDetails} onContextMenu={handleContextMenu}>
+    <Styled.Image src={movie.poster_path}/>
+    <Styled.TitleWrapper>
+      <Styled.Title>{movie.title}</Styled.Title>
+      <Styled.Year>{movie?.release_date && (new Date(movie.release_date)).getFullYear()}</Styled.Year>
+    </Styled.TitleWrapper>
+    <Styled.Genre>{movie?.genres?.length && movie.genres.join(', ')}</Styled.Genre>
     {showContextMenu && (<ContextMenu onClick={onActionClick}/>)}
-  </div>);
+  </Styled.Wrapper>);
 }
 
   export default MovieItem;

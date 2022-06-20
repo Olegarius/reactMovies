@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
-import styles from './index.module.css';
+import * as Styled from './styles';
 
 type Props = {
   onClick: (actionType: string) => (event: any) => void;
@@ -8,10 +8,10 @@ type Props = {
 
 const ContextMenu:React.FC<Props> = ({onClick: action}) => {
 
-  return (<ul className={styles.wrapperContext}>
+  return (<Styled.WrapperContext>
     <li onClick={action('edit')}>Edit</li>
     <li onClick={action('delete')}>Delete</li>
-  </ul>);
+  </Styled.WrapperContext>);
 }
 
   export default ContextMenu;

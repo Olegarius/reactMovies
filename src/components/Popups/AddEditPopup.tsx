@@ -1,17 +1,17 @@
 import React, {useCallback, useEffect, useState, useContext} from "react";
-import Form from '../../elements/Form';
-import closeImg from './close.svg';
-import Button from '../../elements/Button';
-import {TMovie} from '../../api/types';
-import styles from './index.module.css';
-import DatePicker from "../../elements/DatePicker";
-import Input from "../../elements/Input";
-import Select from "../../elements/Select";
-import {OptionType} from "../../elements/Select/Select";
-import { getFilterItems } from "../../api";
-import { MovieContext } from "../../contextProviders";
-import { TFilter } from "../../store/slices/filters";
-import { getDuration, setDuration } from "../../helpers/converters";
+
+import closeImg from 'images/close.svg';
+import {TMovie} from 'api/types';
+import * as Styled from './styles';
+import {OptionType} from "elements/Select/Select";
+import DatePicker from "elements/DatePicker";
+import Input from "elements/Input";
+import Select from "elements/Select";
+import Button from 'elements/Button';
+import { getFilterItems } from "api";
+import { MovieContext } from "contextProviders";
+import { TFilter } from "store/slices/filters";
+import { getDuration, setDuration } from "helpers/converters";
 
 type Props = {
   onClose: () => void;
@@ -71,31 +71,31 @@ const AddEditPopup:React.FC<Props> = ({onClose, onConfirm}) => {
     formMethods?.reset?.(config.defaultValues)
   }, [config.defaultValues]);
 
-  return (<Form config={config} className={styles.wrapper} onSubmit={handleFormSubmit}>
+  return (<Styled.Form config={config} onSubmit={handleFormSubmit}>
       <>
-      <div className={styles.close} onClick={onClose}><img src={closeImg}/></div>
-      <div className={styles.title}>Edit MOVIE</div>
-      <div className={`${styles.content} ${styles.editContent}`}>
-        <div className={styles.titleDateWrapper}>
-          <Input name="title" title="title" wrapperClassName={styles.inputWrapper} value={movie?.title ?? ''} rules={formFields.title}/>
-          <DatePicker name="release_date" title="release date" className={styles.inputDate} value={new Date(movie?.release_date ?? new Date())} rules={formFields.release_date}/>
-        </div>
-        <div className={styles.titleDateWrapper}>
-          <Input name="poster_path" title="movie url" wrapperClassName={styles.inputWrapper} value={movie?.poster_path ?? ''} rules={formFields.poster_path}/>
-          <Input name="vote_average" title="rating" className={styles.inputDate} width="300px" value={movie?.vote_average ?? ''} rules={formFields.vote_average}/>
-        </div>
-        <div className={styles.titleDateWrapper}>
-          <Select name="genres" title="genre" wrapperClassName={styles.inputWrapper} options={filterItems} value={currentGenres}/>
-          <Input name="runtime" title="runtime" className={styles.inputDate} width="300px" value={getDuration(movie?.runtime)} rules={formFields.runtime}/>
-        </div>
-      </div>
-      <Input name="overview" title="overview" type="textarea" className={styles.textarea} height="197px" width="100%" value={movie?.overview} rules={formFields.overview}/>
-      <div className={styles.buttonWrapper}>
-        <Button type="reset" onClick={onResetHandler} className={styles.button}>reset</Button>
-        <Button type="submit" className={styles.button}>submit</Button>
-      </div>
+      <Styled.Close onClick={onClose}><img src={closeImg}/></Styled.Close>
+      <Styled.Title>Edit MOVIE</Styled.Title>
+      <Styled.Content type="edit">
+        <Styled.TitleDateWrapper>
+          <Input name="title" title="title" wrapperClassName={Styled.InputWrapper} value={movie?.title ?? ''} rules={formFields.title}/>
+          <DatePicker name="release_date" title="release date" className={Styled.InputDate} value={new Date(movie?.release_date ?? new Date())} rules={formFields.release_date}/>
+        </Styled.TitleDateWrapper>
+        <Styled.TitleDateWrapper>
+          <Input name="poster_path" title="movie url" wrapperClassName={Styled.InputWrapper} value={movie?.poster_path ?? ''} rules={formFields.poster_path}/>
+          <Input name="vote_average" title="rating" className={Styled.InputDate} width="300px" value={movie?.vote_average ?? ''} rules={formFields.vote_average}/>
+        </Styled.TitleDateWrapper>
+        <Styled.TitleDateWrapper>
+          <Select name="genres" title="genre" wrapperClassName={Styled.InputWrapper} options={filterItems} value={currentGenres}/>
+          <Input name="runtime" title="runtime" className={Styled.InputDate} width="300px" value={getDuration(movie?.runtime)} rules={formFields.runtime}/>
+        </Styled.TitleDateWrapper>
+      </Styled.Content>
+      <Input name="overview" title="overview" type="textarea" className={Styled.Textarea} height="197px" width="100%" value={movie?.overview} rules={formFields.overview}/>
+      <Styled.ButtonWrapper>
+        <Button type="reset" onClick={onResetHandler}>reset</Button>
+        <Button type="submit">submit</Button>
+      </Styled.ButtonWrapper>
       </>
-    </Form>);
+    </Styled.Form>);
 }
 
   export default AddEditPopup;

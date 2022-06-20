@@ -1,104 +1,105 @@
-.wrapper {
+import styled from "styled-components";
+import {colors} from "const";
+
+export const Wrapper = styled.div`
     width: 100%;
     box-sizing: border-box;
-    background-color: var(--color_black);
+    background-color: ${colors.color_black};
     padding: 37px 60px 29px 60px;
     margin-bottom: 10px;
     position: relative;
- }
+`;
 
- .logo {
+export const Logo = styled.div`
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 300;
     font-size: 20px;
     line-height: 24px;
-    
-    color: var(--color_red);
- }
+    color: ${colors.color_red};
+`;
 
- .search {
+export const Search = styled.div`
      cursor: pointer;
- }
+`;
 
- .logoSearchWrapper {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     margin-bottom: 30px;
- }
+export const LogoSearchWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+`;
 
-.contentWrapper {
+export const ContentWrapper = styled.div`
     display: flex;
     width: 100%;
-}
+`;
 
-.descriptionWrapper {
+export const DescriptionWrapper = styled.div`
     margin-left: 59px;
-}
+`;
 
-.title {
+export const Title = styled.div`
     font-weight: 300;
     font-size: 40px;
     line-height: 49px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: var(--color_white);
- }
+    color: ${colors.color_white};
+`;
 
- .rating {
+export const Rating = styled.div`
     width: 60px;
     height: 60px;
     margin-left: 25px;
-    color: var(--color_white);
+    color: ${colors.color_white};
     font-weight: 300;
     font-size: 20px;
     text-transform: uppercase;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--color_white);
+    border: 1px solid ${colors.color_white};
     border-radius: 50px;
-}
+`;
 
-.titleRatingWrapper {
+export const TitleRatingWrapper = styled.div`
     display: flex;
     margin-bottom: 4px;
-}
+`;
 
-.image {
+export const Image = styled.img`
     height: 486px;
     width: 323px;
-}
+`;
 
-.genre {
+export const Genre = styled.div`
     font-weight: 500;
     font-size: 14px;
-    color: var(--color_white);
+    color: ${colors.color_white};
     mix-blend-mode: normal;
     opacity: 0.5;
     margin-bottom: 30px;
-}
+`;
 
-.year, .duration {
+export const Year = styled.div`
     font-weight: 300;
     font-size: 24px;
-    color: var(--color_red);
+    color: ${colors.color_red};
     margin-bottom: 30px;
-}
-
-.duration {
+`;
+export const Duration = styled(Year)`
     margin-left: 51px;
-}
+`;
 
-.yearDurationWrapper {
+export const YearDurationWrapper = styled.div`
     display: flex;
-}
+`;
 
-.description {
+export const Description = styled.div`
     font-weight: 300;
     font-size: 20px;
-    color: var(--color_white);
+    color: ${colors.color_white};
     mix-blend-mode: normal;
     opacity: 0.5;
-}
+`;
