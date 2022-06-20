@@ -1,21 +1,24 @@
 import React from 'react';
 
 import { ErrorBoundaryFunc } from "./helpers/errorboundary";
-import styles from './App.module.css';
-import Header from './components/Header';
-import Main from './components/Main';
-import Footer from './components/Footer';
+import * as Styled from "./styles";
+import {Routes} from './pages/Routes';
+import contextProviders from './contextProviders';
+import { IMovieProvider } from './contextProviders/Movie';
 
 function App() {
   return (
     <ErrorBoundaryFunc>
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <Header/>
-          <Main/>
-          <Footer/>
-        </div>
-      </div>
+      {contextProviders.reduce(
+        (memo, Provider: React.FC<IMovieProvider>) => (
+          <Provider>{memo}</Provider>
+        ),
+        <Styled.Wrapper>
+          <Styled.Container>
+            <Routes/>
+          </Styled.Container>
+        </Styled.Wrapper>
+      )}
     </ErrorBoundaryFunc>
   );
 }

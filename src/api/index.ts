@@ -1,13 +1,49 @@
+import axios from "axios";
+import {SERVER} from "../const";
+import {TFilterProps, TMovie} from "./types";
+
 export const getFilterItems = async () => {
-    const data = await fetch('/data/filters.json');
-    return await data.json();
+    //return fetch('/data/filters.json').json();
+    const responseData: {data: any[]} = await axios.get('/data/filters.json');
+    return responseData.data;
 };
 
-type MoviesProps = {
-    filter: string | null;
-    sort: string | null;
-}
-export const getMovies = async ({filter, sort}: MoviesProps) => {
-    const data = await fetch(`/data/movies.json?filter=${filter}&sort=${sort}`);
-    return await data.json();
+export const getMovies = async (data: TFilterProps) => {
+    const queryParams: any = {};
+    Object.entries(data).filter(([, value]) => (value ?? false)).forEach(([key, value]) => (queryParams[key] = value));
+    const params = Object.keys(queryParams).length > 0 ? new URLSearchParams(queryParams).toString() : null;
+
+    const resultData = await fetch(`${SERVER}/movies${params ? `?${params}` : ""}`);
+
+    return resultData.json();
+};
+
+export const getMovie = async (id: string | number) => {
+   const resultData = await fetch(`${SERVER}/movies/${id}`);
+
+   return resultData.json();
+};
+
+export const removeMovie = (id: string | number) => fetch(`${SERVER}/movies/${id}`, {method: 'DELETE'});
+
+export const createMovie = async (movie: TMovie) => {
+    const resultData = await fetch(`${SERVER}/movies`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(movie)
+    });
+    return resultData.json();
+};
+
+export const updateMovie = async (movie: TMovie) => {
+    const resultData = await fetch(`${SERVER}/movies`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(movie)
+    });
+    return resultData.json();
 };

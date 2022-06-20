@@ -1,26 +1,26 @@
 import React, { useCallback, useState } from "react";
-import downImg from '../../../images/down.svg';
-import { SORT_LIST } from "./const";
-import styles from './index.module.css';
+import downImg from 'images/down.svg';
+import { SORT_LIST, SORT_VALUES } from "const";
+import * as Styled from './styles';
 
 type Props = {
   orderBy: string;
-  onChangeOrder: (newOrder: string) => () => void;
+  onChangeOrder: (newOrder: SORT_VALUES) => () => void;
 }
 const OrderSelect:React.FC<Props> = ({orderBy, onChangeOrder}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const onToggleSelect = useCallback(() => setIsOpen(isOpen => !isOpen), [setIsOpen]);
-  return (<div className={styles.orderSelectWrapper} onClick={onToggleSelect}>
-    <div className={styles.selectedOrderWrapper}>
+  return (<Styled.OrderSelectWrapper onClick={onToggleSelect}>
+    <Styled.SelectedOrderWrapper>
       {orderBy}
-      <img src={downImg} className={styles.orderSelectDownImg} />
-    </div>
-    {isOpen && <div className={styles.orderList}>
+      <Styled.OrderSelectDownImg src={downImg} />
+    </Styled.SelectedOrderWrapper>
+    {isOpen && <Styled.OrderList>
       {SORT_LIST.map(item => (
-        <div key={item.value} className={styles.orderListItem} onClick={onChangeOrder(item.value)}>{item.title}</div>
+        <Styled.OrderListItem key={item.value} onClick={onChangeOrder(item.value)}>{item.title}</Styled.OrderListItem>
       ))}
-    </div>}
-  </div>);
+    </Styled.OrderList>}
+  </Styled.OrderSelectWrapper>);
 }
 
   export default OrderSelect;

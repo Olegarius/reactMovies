@@ -1,16 +1,34 @@
-import React from "react";
+import React, {useCallback, useEffect} from "react";
 import OrderSelect from './OrederSelect';
-import styles from './index.module.css';
+import { useSelector } from "react-redux";
+import {useAppDispatch} from "store";
+import {selectMovieFilters} from "store/slices/movies/selectors";
+import { setMovieFilter } from "store/slices/movies";
+import { SORT_VALUES } from "const";
+import * as Styled from './styles';
+import { useSearchParams } from "react-router-dom";
 
-type Props = {
-  orderBy: string;
-  onChangeOrder: (newOrder: string) => () => void;
-}
-const Orders:React.FC<Props> = ({orderBy, onChangeOrder}) => {
-  return (<div className={styles.orderWrapper}>
-    <div className={styles.orderTitle}>Sort by</div>
+const Orders:React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchURLString = Object.fromEntries(searchParams)
+  const dispatch = useAppDispatch();
+  const movieFilters = useSelector(selectMovieFilters);
+  const orderBy = searchParams.get("genre") || movieFilters?.searchBy || SORT_VALUES.TITLE;
+
+  const onChangeOrder = useCallback((searchBy: string) => () => {
+    const searchString = {...searchURLString, genre: searchBy};
+    setSearchParams(searchString, { replace: true });
+    dispatch(setMovieFilter({searchBy}));
+  }, []);
+
+  useEffect(() => {
+    dispatch(setMovieFilter({searchBy: orderBy}));
+  }, [dispatch]);
+
+  return (<Styled.OrderWrapper>
+    <Styled.OrderTitle>Sort by</Styled.OrderTitle>
     <OrderSelect orderBy={orderBy} onChangeOrder={onChangeOrder}/>
-  </div>);
+  </Styled.OrderWrapper>);
 }
 
   export default Orders;

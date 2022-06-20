@@ -1,5 +1,5 @@
 import React from "react";
-import styles from '../App.module.css';
+import * as Styled from './styles';
 
 type ErrorHandler = (error: Error, info: React.ErrorInfo) => void;
 type ErrorHandlingComponent<Props> = (props: Props, error?: Error) => React.ReactNode;
@@ -37,7 +37,7 @@ type Props = {
 
 export const ErrorBoundaryFunc = Catch(function MyErrorBoundary(props: Props, error?: Error) {
   if (error) {
-    return <div className={styles.errorWrapper}>{error.message}</div>;
+    return <Styled.ErrorWrapper>{error.message}</Styled.ErrorWrapper>;
   } else {
     return <>{props.children}</>;
   }
